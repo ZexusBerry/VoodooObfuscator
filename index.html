@@ -169,10 +169,10 @@
         }
 
         // Обфускация для уровня Normal
-        function obfuscateNormal(text) {
-            var obfuscatedCode = '-- Obfuscated Text: ' + text + '\n-- Obfuscator Complexity: ' + obfuscatorComplexity + '\n';
-            return '/* Normal Obfuscation Code Goes Here... */';
-        }
+function obfuscateNormal(text) {
+    // Удаляем все пробелы, табуляции и переводы строк
+    return text.replace(/\s+/g, '');
+}
 
         // Обфускация для уровня Hard
         function obfuscateHard(text) {
