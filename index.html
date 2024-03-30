@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoodooObfuscator</title>
+    <style>
+        /* Общие стили */
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Стили для кастомного текстового поля */
+        .custom-textbox {
+            border: 2px solid #8B0000; /* Цвет рамки */
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            outline: none;
+            width: 400px; /* Увеличиваем ширину текстового поля */
+            background-color: #2a2a2a; /* Цвет фона */
+            color: #fff; /* Цвет текста */
+        }
+
+        /* Стили для кастомных радиокнопок и меток */
+        .custom-radio {
+            display: none;
+        }
+
+        .custom-radio + label {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+            line-height: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .custom-radio + label:before {
+            content: '';
+            position: absolute;
+            left: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            border: 2px solid #8B0000; /* Цвет рамки */
+            border-radius: 50%;
+            background-color: transparent;
+        }
+
+        .custom-radio:checked + label:before {
+            background-color: #8B0000; /* Цвет заливки */
+        }
+
+        /* Анимация для радиокнопок */
+        .custom-radio + label:before {
+            transition: background-color 0.3s ease;
+        }
+
+        /* Стили для кнопок */
+        .custom-button {
+            background-color: #8B0000; /* Цвет кнопки */
+            border: none;
+            color: #fff;
+            padding: 10px 10px;
+            font-size: 12px;
+            font-family: Unispace;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-button:hover {
+            background-color: #660000; /* Цвет кнопки при наведении */
+        }
+    </style>
+</head>
+<body>
+    <h2>VoodooObfuscator</h2>
+    <form id="myForm">
+        <label for="textbox" class="custom-label">Enter Text:</label><br>
+        <textarea id="textbox" class="custom-textbox" rows="6" cols="50"></textarea><br><br>
+
+        <label class="custom-label">Select Obfuscator Complexity:</label><br>
+        <input type="radio" id="normal" name="obfuscator" value="normal" class="custom-radio" checked>
+        <label for="normal" class="custom-label">Normal</label><br>
+        <input type="radio" id="hard" name="obfuscator" value="hard" class="custom-radio">
+        <label for="hard" class="custom-label">Hard</label><br>
+        <input type="radio" id="god" name="obfuscator" value="god" class="custom-radio">
+        <label for="god" class="custom-label">God</label><br>
+        <input type="radio" id="void" name="obfuscator" value="void" class="custom-radio">
+        <label for="void" class="custom-label">Void</label><br><br>
+
+        <!-- Кастомные кнопки -->
+        <button type="button" class="custom-button" onclick="generateCode()">Generate Obfuscated Code</button>
+        <button type="button" class="custom-button" onclick="copyToClipboard()">Copy</button>
+        <a id="downloadLink" download="VoodooObfuscator.txt"><button type="button" class="custom-button">Download</button></a>
+        <button type="button" class="custom-button" onclick="clearTextbox()">Clear</button>
+    </form>
+
+    <h3>Obfuscated Code:</h3>
+    <textarea id="obfuscatedCode" rows="6" cols="50" readonly class="custom-textbox"></textarea>
+
+    <script>
+        function generateCode() {
+            var text = document.getElementById('textbox').value;
+            var obfuscator = document.querySelector('input[name="obfuscator"]:checked').value;
+
+            // Обработка выбора сложности обфускатора
+            var obfuscatorComplexity = '';
+            switch(obfuscator) {
+                case 'normal':
+                    obfuscatorComplexity = 'Normal';
+                    break;
+                case 'hard':
+                    obfuscatorComplexity = 'Hard';
+                    break;
+                case 'god':
+                    obfuscatorComplexity = 'God';
+                    break;
+                case 'void':
+                    obfuscatorComplexity = 'Void';
+                    break;
+                default:
+                    obfuscatorComplexity = 'Normal';
+            }
+
+            // Пример генерации обфусцированного кода
+            var obfuscatedCode = '';
+
+            // Добавление различных уровней обфускатора
+            switch(obfuscator) {
+                case 'hard':
+                    obfuscatedCode = obfuscateHard(text);
+                    break;
+                case 'god':
+                    obfuscatedCode = obfuscateGod(text);
+                    break;
+                case 'void':
+                    obfuscatedCode = obfuscateVoid(text);
+                    break;
+                default:
+                    obfuscatedCode = obfuscateNormal(text);
+            }
+
+            // Добавляем текст в обфусцированный код как комментарий
+            obfuscatedCode += '\n-- Thanks for using VoodooObfuscator :D\n';
+
+            // Вывод обфусцированного текста только во второе текстовое поле
+            document.getElementById('obfuscatedCode').value = obfuscatedCode;
+
+            // Добавляем обфусцированный код в ссылку для скачивания
+            var downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(obfuscatedCode);
+        }
+
+        function copyToClipboard() {
+            var obfuscatedCode = document.getElementById('obfuscatedCode').value;
+            navigator.clipboard.writeText(obfuscatedCode)
+                .then(() => alert('Copied to clipboard'))
+                .catch((err) => console.error('Error copying text: ', err));
+        }
+
+        // Обфускация для уровня Normal
+        function obfuscateNormal(text) {
+            var obfuscatedCode = '-- Obfuscated Text: ' + text + '\n-- Obfuscator Complexity: ' + obfuscatorComplexity + '\n';
+            return '/* Normal Obfuscation Code Goes Here... */';
+        }
+
+        // Обфускация для уровня Hard
+        function obfuscateHard(text) {
+            // Пример сложной обфускации для уровня Hard
+            var obfuscatedText = '';
+            for (var i = 0; i < text.length; i++) {
+                obfuscatedText += String.fromCharCode(text.charCodeAt(i) + 1);
+            }
+            return obfuscatedText;
+        }
+
+        // Обфускация для уровня God
+        function obfuscateGod(text) {
+            // Более сложная обфускация для уровня God
+            var obfuscatedText = '';
+            for (var i = 0; i < text.length; i++) {
+                var key = (i + 1) % 256; // Генерация ключа на основе позиции символа
+                obfuscatedText += String.fromCharCode(text.charCodeAt(i) ^ key); // Применение XOR-шифрования
+            }
+            return btoa(obfuscatedText); // Кодирование текста в формат base64
+        }
+
+        // Обфускация для уровня Void
+        function obfuscateVoid(text) {
+            // Обфускация для уровня Void
+            var obfuscatedText = '';
+            for (var i = 0; i < text.length; i++) {
+                var charCode = text.charCodeAt(i);
+                // Замена символов на их Unicode-эквиваленты
+                obfuscatedText += '&#x' + charCode.toString(16) + ';';
+            }
+            // Использование обратной строковой функции
+            return reverseString(obfuscatedText);
+        }
+
+        // Обратная строковая функция
+        function reverseString(str) {
+            return str.split('').reverse().join('');
+        }
+
+        function clearTextbox() {
+            document.getElementById('obfuscatedCode').value = '';
+        }
+    </script>
+</body>
+</html>
