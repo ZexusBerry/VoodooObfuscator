@@ -19,7 +19,8 @@
             padding: 10px;
             font-size: 16px;
             outline: none;
-            width: 400px; /* Увеличиваем ширину текстового поля */
+            width: 620px;
+            height: 232px;
             background-color: #2a2a2a; /* Цвет фона */
             color: #fff; /* Цвет текста */
         }
@@ -85,18 +86,24 @@
 <body>
     <h2>VoodooObfuscator</h2>
     <form id="myForm">
-        <label for="textbox" class="custom-label">Enter Text:</label><br>
+        <label for="textbox">Enter Text:</label><br>
         <textarea id="textbox" class="custom-textbox" rows="6" cols="50"></textarea><br><br>
 
-        <label class="custom-label">Select Obfuscator Complexity:</label><br>
-        <input type="radio" id="normal" name="obfuscator" value="normal" class="custom-radio" checked>
-        <label for="normal" class="custom-label">Normal</label><br>
-        <input type="radio" id="hard" name="obfuscator" value="hard" class="custom-radio">
-        <label for="hard" class="custom-label">Hard</label><br>
-        <input type="radio" id="god" name="obfuscator" value="god" class="custom-radio">
-        <label for="god" class="custom-label">God</label><br>
-        <input type="radio" id="void" name="obfuscator" value="void" class="custom-radio">
-        <label for="void" class="custom-label">Void</label><br><br>
+        <label>Select Obfuscator Complexity:</label><br>
+        <input type="radio" id="normal" name="obfuscator" value="normal" checked>
+        <label for="normal">Normal</label><br>
+        <input type="radio" id="good" name="obfuscator" value="good">
+        <label for="good">good</label><br>
+        <input type="radio" id="average" name="obfuscator" value="average">
+        <label for="average">Average</label><br>
+        <input type="radio" id="hard" name="obfuscator" value="hard">
+        <label for="hard">Hard</label><br>
+        <input type="radio" id="ultimate" name="obfuscator" value="ultimate">
+        <label for="ultimate">Ultimate</label><br>
+        <input type="radio" id="god" name="obfuscator" value="god">
+        <label for="god">God</label><br>
+        <input type="radio" id="void" name="obfuscator" value="void">
+        <label for="void">Void</label><br><br>
 
         <!-- Кастомные кнопки -->
         <button type="button" class="custom-button" onclick="generateCode()">Generate Obfuscated Code</button>
@@ -106,7 +113,7 @@
     </form>
 
     <h3>Obfuscated Code:</h3>
-    <textarea id="obfuscatedCode" rows="6" cols="50" readonly class="custom-textbox"></textarea>
+    <textarea id="obfuscatedCode" class="custom-textbox" rows="9" cols="60" readonly ></textarea><br><br>
 
     <script>
         function generateCode() {
@@ -119,8 +126,17 @@
                 case 'normal':
                     obfuscatorComplexity = 'Normal';
                     break;
+                case 'good':
+                    obfuscatorComplexity = 'good';
+                    break;
+                case 'average':
+                    obfuscatorComplexity = 'Average';
+                    break;
                 case 'hard':
                     obfuscatorComplexity = 'Hard';
+                    break;
+                case 'ultimate':
+                    obfuscatorComplexity = 'Ultimate';
                     break;
                 case 'god':
                     obfuscatorComplexity = 'God';
@@ -137,8 +153,20 @@
 
             // Добавление различных уровней обфускатора
             switch(obfuscator) {
+                case 'normal':
+                    obfuscatedCode = obfuscateNormal(text);
+                    break;
+                case 'good':
+                    obfuscatedCode = obfuscateGood(text);
+                    break;
+                case 'average':
+                    obfuscatedCode = obfuscateAverage(text);
+                    break;
                 case 'hard':
                     obfuscatedCode = obfuscateHard(text);
+                    break;
+                case 'ultimate':
+                    obfuscatedCode = obfuscateUltimate(text);
                     break;
                 case 'god':
                     obfuscatedCode = obfuscateGod(text);
@@ -169,20 +197,46 @@
         }
 
         // Обфускация для уровня Normal
-function obfuscateNormal(text) {
-    // Удаляем все пробелы, табуляции и переводы строк
-    return text.replace(/\s+/g, '');
-}
+        function obfuscateNormal(text) {
+            return text.replace(/\s+/g, '');
+            return text;
+        }
+
+        function obfuscateGood(text) {
+            return text.split('').reverse().join('');
+            return text;
+        }
+
+        // Обфускация для уровня Average
+        function obfuscateAverage(text) {
+            // Пример обфускации для уровня Average
+            var obfuscatedText = '';
+            for (var i = 0; i < text.length; i++) {
+                obfuscatedText += String.fromCharCode(text.charCodeAt(i) + 3); // Сдвигаем символ на 3 позиции
+            }
+            return obfuscatedText;
+        }
 
         // Обфускация для уровня Hard
         function obfuscateHard(text) {
             // Пример сложной обфускации для уровня Hard
             var obfuscatedText = '';
             for (var i = 0; i < text.length; i++) {
-                obfuscatedText += String.fromCharCode(text.charCodeAt(i) + 1);
+                obfuscatedText += String.fromCharCode(text.charCodeAt(i) + 10); // Сдвигаем символ на 10 позиций
             }
             return obfuscatedText;
         }
+
+function obfuscateUltimate(text) {
+    var obfuscatedText = '';
+    for (var i = 0; i < text.length; i++) {
+        var charCode = text.charCodeAt(i);
+        charCode += 5; // Сдвигаем символ на 5 позиций вперед
+        charCode /= 3; // Делаем индекс простым числом
+        obfuscatedText += String.fromCharCode(charCode);
+    }
+    return obfuscatedText;
+}
 
         // Обфускация для уровня God
         function obfuscateGod(text) {
