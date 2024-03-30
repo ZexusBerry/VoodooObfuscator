@@ -26,6 +26,7 @@
         }
 
         /* Стили для кастомных радиокнопок и меток */
+        /* Custom Radio Styles */
         .custom-radio {
             display: none;
         }
@@ -38,6 +39,8 @@
             font-size: 16px;
             line-height: 20px;
             font-family: Arial, sans-serif;
+            display: block;
+            margin-bottom: 10px;
         }
 
         .custom-radio + label:before {
@@ -48,16 +51,16 @@
             transform: translateY(-50%);
             width: 12px;
             height: 12px;
-            border: 2px solid #8B0000; /* Цвет рамки */
+            border: 2px solid #8B0000;
             border-radius: 50%;
             background-color: transparent;
         }
 
         .custom-radio:checked + label:before {
-            background-color: #8B0000; /* Цвет заливки */
+            background-color: #8B0000;
         }
 
-        /* Анимация для радиокнопок */
+        /* Radio Button Animation */
         .custom-radio + label:before {
             transition: background-color 0.3s ease;
         }
